@@ -1,0 +1,265 @@
+// lib/screens/privacy_policy_screen.dart
+//
+// Uses webview_flutter to render a fully styled HTML privacy policy
+// without any external network request — the HTML is embedded as a string.
+
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+
+import 'constants.dart';
+
+class PrivacyPolicyScreen extends StatefulWidget {
+  const PrivacyPolicyScreen({super.key});
+
+  @override
+  State<PrivacyPolicyScreen> createState() => _PrivacyPolicyScreenState();
+}
+
+class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
+  late final WebViewController _controller;
+  bool _loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onPageFinished: (_) => setState(() => _loading = false),
+        ),
+      )
+      ..loadHtmlString(_privacyHtml, baseUrl: '');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: AppColors.cardBg,
+        foregroundColor: Colors.white,
+        title: const Text(
+          '🔒 Privacy Policy',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+        ),
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_rounded),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+      body: Stack(
+        children: [
+          WebViewWidget(controller: _controller),
+          if (_loading)
+            const Center(
+              child: CircularProgressIndicator(color: AppColors.secondary),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+// ── Embedded HTML privacy policy ──────────────────────────────────────────────
+const String _privacyHtml = '''
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Privacy Policy – EggFlicker</title>
+  <style>
+    :root {
+      --bg:      #1A0A2E;
+      --card:    #2D1B4E;
+      --text:    #E8DFF5;
+      --muted:   #B8A9C9;
+      --accent:  #FFD700;
+      --link:    #00E5FF;
+      --border:  rgba(255,255,255,0.08);
+      --radius:  14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, 'Segoe UI', Roboto, sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      padding: 24px 20px 48px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    header .icon { font-size: 48px; margin-bottom: 12px; }
+
+    header h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+    }
+
+    header p {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 6px;
+    }
+
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    section h2 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    section p, section li {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    section ul { padding-left: 20px; }
+    section ul li { margin-bottom: 4px; }
+
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 32px;
+    }
+
+    .last-updated {
+      background: rgba(255, 215, 0, 0.08);
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: #FFD700;
+      font-size: 13px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="icon">🔒</div>
+    <h1>Privacy Policy</h1>
+    <p>EggFlicker — by Silikasdong</p>
+  </header>
+
+  <div class="last-updated">📅 Last Updated: January 1, 2025</div>
+
+  <section>
+    <h2>👋 Introduction</h2>
+    <p>
+      Welcome to <strong>EggFlicker</strong>! We respect your privacy and are committed to
+      protecting any information related to your use of this app. This Privacy Policy explains
+      what data we collect, how we use it, and your rights.
+    </p>
+  </section>
+
+  <section>
+    <h2>📦 Information We Collect</h2>
+    <p>EggFlicker does <strong>not</strong> collect any personal information. Specifically:</p>
+    <ul>
+      <li>We do <strong>not</strong> collect your name, email, or contact details.</li>
+      <li>We do <strong>not</strong> require account registration or login.</li>
+      <li>We do <strong>not</strong> collect device identifiers or advertising IDs.</li>
+      <li>We do <strong>not</strong> use third-party analytics or tracking SDKs.</li>
+    </ul>
+    <p style="margin-top: 10px;">
+      The only data stored is your <strong>high scores and music preference</strong>, saved
+      locally on your device using <code>SharedPreferences</code>. This data never leaves your device.
+    </p>
+  </section>
+
+  <section>
+    <h2>💾 Local Data Storage</h2>
+    <p>The following data is stored <strong>locally on your device only</strong>:</p>
+    <ul>
+      <li>Classic Mode high score</li>
+      <li>Time Attack Mode high score</li>
+      <li>Background music ON/OFF preference</li>
+    </ul>
+    <p style="margin-top: 8px;">You can clear this data at any time by uninstalling the app.</p>
+  </section>
+
+  <section>
+    <h2>🌐 Internet & Permissions</h2>
+    <p>
+      EggFlicker does <strong>not</strong> require an internet connection to play.
+      We do not make any network requests to external servers.
+    </p>
+    <p style="margin-top: 8px;">Permissions requested:</p>
+    <ul>
+      <li><strong>None beyond standard Android/iOS defaults</strong> — no camera, microphone, contacts, or location access.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>👶 Children's Privacy</h2>
+    <p>
+      EggFlicker is suitable for all ages, including children under 13. Since we collect
+      no personal information whatsoever, we fully comply with COPPA (Children's Online
+      Privacy Protection Act) and similar regulations.
+    </p>
+  </section>
+
+  <section>
+    <h2>🔗 Third-Party Services</h2>
+    <p>
+      EggFlicker does not integrate any third-party advertising networks, analytics services,
+      social login providers, or data brokers. Your gameplay experience is entirely private.
+    </p>
+  </section>
+
+  <section>
+    <h2>🔄 Changes to This Policy</h2>
+    <p>
+      We may update this Privacy Policy from time to time. Any changes will be reflected
+      with an updated "Last Updated" date. Continued use of the app after changes constitutes
+      acceptance of the updated policy.
+    </p>
+  </section>
+
+  <section>
+    <h2>📬 Contact Us</h2>
+    <p>If you have any questions or concerns about this Privacy Policy, please contact:</p>
+    <ul>
+      <li><strong>Developer:</strong> Silikasdong</li>
+      <li><strong>Email:</strong> <a href="mailto:sailikuerdong@gmail.com">sailikuerdong@gmail.com</a></li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>© 2025 Silikasdong · EggFlicker · All rights reserved</p>
+    <p style="margin-top: 4px;">Thank you for playing! 🥚🐔</p>
+  </footer>
+
+</body>
+</html>
+''';
