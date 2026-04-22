@@ -48,7 +48,7 @@ class _MenuScreenState extends State<MenuScreen> {
           children: [
             // Background image
             Image.asset(
-              'assets/images/menu_bg.png',
+              'assets/img_1.png',
               fit: BoxFit.cover,
               errorBuilder: (_, __, ___) => Container(
                 decoration: const BoxDecoration(
@@ -90,7 +90,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     width: 180,
                     height: 180,
                     child: Lottie.asset(
-                      'assets/animations/hen_idle.json',
+                      'assets/Hatch.json',
                       fit: BoxFit.contain,
                       errorBuilder: (_, __, ___) => const Icon(
                         Icons.egg_alt_rounded,

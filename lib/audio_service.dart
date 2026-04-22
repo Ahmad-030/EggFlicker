@@ -52,7 +52,7 @@ class AudioService with WidgetsBindingObserver {
   Future<void> _startMusic() async {
     // Replace with your actual asset path, e.g. 'audio/bg_music.mp3'
     try {
-      await _bgPlayer.play(AssetSource('audio/bg_music.mp3'));
+      await _bgPlayer.play(AssetSource('music.mp3'));
     } catch (_) {
       // Asset not bundled yet – silently skip in dev
     }

@@ -1,4 +1,4 @@
-package com.example.eggflicker
+package com.sailikuerdong.eggflicker
 
 import io.flutter.embedding.android.FlutterActivity
 

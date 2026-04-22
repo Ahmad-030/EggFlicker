@@ -8,7 +8,7 @@
 PRODUCT_NAME = eggflicker
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.eggflicker
+PRODUCT_BUNDLE_IDENTIFIER = com.sailikuerdong.eggflicker
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2026 com.example. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2026 com.sailikuerdong. All rights reserved.

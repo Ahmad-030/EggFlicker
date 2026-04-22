@@ -44,7 +44,7 @@ class AboutScreen extends StatelessWidget {
                   width: 180,
                   height: 180,
                   child: Lottie.asset(
-                    'assets/animations/about_hen.json',
+                    'assets/Hatch.json',
                     fit: BoxFit.contain,
                     errorBuilder: (_, __, ___) => const Text('🐔', style: TextStyle(fontSize: 80)),
                   ),
@@ -65,11 +65,6 @@ class AboutScreen extends StatelessWidget {
                   ),
                 ).animate(delay: 200.ms).fadeIn().slideY(begin: 0.3, end: 0),
 
-                const SizedBox(height: 4),
-
-                Text(AppStrings.version,
-                    style: const TextStyle(color: AppColors.textSecondary, fontSize: 13))
-                    .animate(delay: 300.ms).fadeIn(),
 
                 const SizedBox(height: 28),
 
@@ -98,19 +93,6 @@ class AboutScreen extends StatelessWidget {
                   content: [
                     'Name: ${AppStrings.developerName}',
                     'Email: ${AppStrings.developerEmail}',
-                  ],
-                ),
-
-                const SizedBox(height: 16),
-
-                // Credits card
-                _InfoCard(
-                  title: '🙏 Credits',
-                  delay: 700.ms,
-                  content: [
-                    'Built with Flutter & Dart',
-                    'Animations by LottieFiles',
-                    'Audio by audioplayers',
                   ],
                 ),
 

@@ -44,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [
           // Background image
           Image.asset(
-            'assets/images/splash_bg.png',
+            'assets/img.png',
             fit: BoxFit.cover,
             errorBuilder: (_, __, ___) => Container(
               decoration: const BoxDecoration(
@@ -68,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 width: 220,
                 height: 220,
                 child: Lottie.asset(
-                  'assets/animations/hen_splash.json',
+                  'assets/Hatch.json',
                   fit: BoxFit.contain,
                   errorBuilder: (_, __, ___) => const Icon(
                     Icons.egg_alt_rounded,
